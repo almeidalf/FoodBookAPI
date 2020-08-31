@@ -15,6 +15,7 @@ namespace FoodBookAPI.DB
 
         }
 
-        public DbSet<Receita> Receita { get; set; }
+        public DbSet<Receita> Receitas { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }

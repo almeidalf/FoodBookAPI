@@ -16,5 +16,9 @@ namespace FoodBookAPI.V1.Models
         public string UsuarioId { get; set; }
         public ApplicationUser Usuario { get; set; }
         public DateTime ExpirationToken { get; set; }
+        public bool Utilizado { get; set; }
+        public DateTime ExpirationRefreshToken { get; set; }
+        public DateTime Criado { get; set; }
+        public DateTime? Atualizado { get; set; }
     }
 }
