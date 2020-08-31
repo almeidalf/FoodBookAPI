@@ -17,6 +17,5 @@ namespace FoodBookAPI.V1.Models.DTO
         [Required]
         [Compare("Senha")]
         public string ConfirmacaoSenha { get; set; }
-        public string Slogan { get; set; }
     }
 }

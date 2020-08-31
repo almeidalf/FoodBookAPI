@@ -1,4 +1,5 @@
-﻿using FoodBookAPI.V1.Models;
+﻿using AutoMapper;
+using FoodBookAPI.V1.Models;
 using FoodBookAPI.V1.Models.DTO;
 using FoodBookAPI.V1.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -6,31 +7,72 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace FoodBookAPI.V1.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UsuarioController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IUsuario _usuarioRepository;
         private readonly IToken _tokenRepository;
         private readonly IConfiguration _config;
         private readonly UserManager<ApplicationUser> _userManager;
         public UsuarioController(
+                                 IMapper mapper,
                                  IUsuario usuarioRepository,
                                  IToken tokenRepository,
                                  UserManager<ApplicationUser> userManager,
                                  IConfiguration config
                                 )
         {
+            _mapper = mapper;
             _usuarioRepository = usuarioRepository;
             _tokenRepository = tokenRepository;
             _userManager = userManager;
             _config = config;
         }
 
+
+        [HttpPost("")]
+        public ActionResult Cadastrar([FromBody] UsuarioDTO usuarioDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser usuario = new ApplicationUser();
+                usuario.FullName = usuarioDTO.Nome;
+                usuario.UserName = usuarioDTO.Email;
+                usuario.Email = usuarioDTO.Email;
+
+                var resultado = _userManager.CreateAsync(usuario, usuarioDTO.Senha).Result;
+
+                if (!resultado.Succeeded)
+                {
+                    List<string> erros = new List<string>();
+                    foreach (var erro in resultado.Errors)
+                    {
+                        erros.Add(erro.Description);
+                    }
+                    return UnprocessableEntity(erros);
+                }
+                else
+                {
+                    return Ok(usuario);
+                }
+
+            }
+            else
+            {
+                return UnprocessableEntity(ModelState);
+            }
+        }
+
+        [HttpPost("login")]
         public ActionResult Login([FromBody] UsuarioDTO usuarioDTO)
         {
             ModelState.Remove("Nome");
@@ -52,6 +94,25 @@ namespace FoodBookAPI.V1.Controllers
             {
                 return UnprocessableEntity(ModelState);
             }
+        }
+
+        [HttpPost("renovar")]
+        public ActionResult Renovar([FromBody] TokenDTO tokenDTO)
+        {
+            var refreshTokenDB = _tokenRepository.Obter(tokenDTO.RefreshToken);
+
+            if (refreshTokenDB == null)
+                return NotFound();
+
+            //RefreshToken antigo - Atualizar - Desativar esse refreshToken
+            refreshTokenDB.Atualizado = DateTime.Now;
+            refreshTokenDB.Utilizado = true;
+            _tokenRepository.Atualizar(refreshTokenDB);
+
+            //Gerar um novo Token/Refresh Token - Salvar.
+            var usuario = _usuarioRepository.ObterUsuarioEspecifico(refreshTokenDB.UsuarioId);
+
+            return GerarToken(usuario);
         }
 
         private TokenDTO BuildToken(ApplicationUser usuario)

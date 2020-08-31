@@ -2,10 +2,8 @@
 using FoodBookAPI.V1.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodBookAPI.V1.Repository
 {
@@ -26,7 +24,7 @@ namespace FoodBookAPI.V1.Repository
                 foreach(var erro in result.Errors)
                 {
                     sb.Append(erro.Description);
-                }
+                };
                 throw new Exception($"Usuário não cadastrado! {sb.ToString()}");
             }
         }
