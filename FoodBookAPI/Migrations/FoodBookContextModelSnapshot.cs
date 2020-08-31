@@ -97,8 +97,12 @@ namespace FoodBookAPI.Migrations
                     b.Property<string>("Ingredientes")
                         .HasColumnType("text");
 
-                    b.Property<string>("Titulo")
+                    b.Property<string>("ModoPreparo")
                         .HasColumnType("text");
+
+                    b.Property<string>("Titulo")
+                        .HasColumnType("varchar(150)")
+                        .HasMaxLength(150);
 
                     b.Property<string>("UsuarioId")
                         .HasColumnType("varchar(85)");

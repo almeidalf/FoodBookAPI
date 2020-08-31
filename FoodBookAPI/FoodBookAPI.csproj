@@ -5,14 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200831125659_BancoInicial.cs" />
-    <Compile Remove="Migrations\20200831125659_BancoInicial.Designer.cs" />
-    <Compile Remove="Migrations\20200831125908_BancoInicial.cs" />
-    <Compile Remove="Migrations\20200831125908_BancoInicial.Designer.cs" />
-    <Compile Remove="Migrations\20200831130049_BancoInicial.cs" />
-    <Compile Remove="Migrations\20200831130049_BancoInicial.Designer.cs" />
-    <Compile Remove="Migrations\20200831130240_BancoInicial.cs" />
-    <Compile Remove="Migrations\20200831130240_BancoInicial.Designer.cs" />
+    <Compile Remove="Migrations\20200831163917_BancoInicial.cs" />
+    <Compile Remove="Migrations\20200831163917_BancoInicial.Designer.cs" />
+    <Compile Remove="Migrations\20200831165208_attbanco.cs" />
+    <Compile Remove="Migrations\20200831165208_attbanco.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

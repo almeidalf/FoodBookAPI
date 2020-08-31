@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace FoodBookAPI.Migrations
 {
-    public partial class BancoInicial : Migration
+    public partial class attbanco : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -185,9 +185,10 @@ namespace FoodBookAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Titulo = table.Column<string>(nullable: true),
+                    Titulo = table.Column<string>(maxLength: 150, nullable: true),
                     Descricao = table.Column<string>(nullable: true),
                     Ingredientes = table.Column<string>(nullable: true),
+                    ModoPreparo = table.Column<string>(nullable: true),
                     UsuarioId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

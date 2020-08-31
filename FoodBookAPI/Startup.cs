@@ -39,7 +39,8 @@ namespace FoodBookAPI
         public void ConfigureServices(IServiceCollection services)
         {
             #region AutoMapper-Config
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new DTOMapperProfile());
             });
             IMapper mapper = config.CreateMapper();
@@ -56,8 +57,9 @@ namespace FoodBookAPI
                     op.SuppressModelStateInvalidFilter = true;
                 });
 
-                services.AddTransient<IUsuario, UsuarioRepository>();
-                services.AddTransient<IToken, TokenRepository>();
+            services.AddTransient<IUsuario, UsuarioRepository>();
+            services.AddTransient<IToken, TokenRepository>();
+            services.AddTransient<IReceita, ReceitaRepository>();
 
             services.AddCors(cfg =>
             {
@@ -78,7 +80,8 @@ namespace FoodBookAPI
                 });
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 5;
                 options.Password.RequireLowercase = false;
@@ -101,8 +104,8 @@ namespace FoodBookAPI
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("SecurityKeyAPI")))
-            };
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKeyAPI"]))
+                };
             });
 
             services.AddAuthorization(auth => {
@@ -114,13 +117,16 @@ namespace FoodBookAPI
             });
 
 
-            services.ConfigureApplicationCookie(options => {
-                options.Events.OnRedirectToLogin = context => {
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
                     context.Response.StatusCode = 401;
                     return Task.CompletedTask;
                 };
             });
 
+            services.AddRazorPages();
             services.AddControllers();
         }
 
@@ -132,10 +138,12 @@ namespace FoodBookAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
