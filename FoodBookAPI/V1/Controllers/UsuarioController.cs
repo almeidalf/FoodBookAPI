@@ -115,17 +115,34 @@ namespace FoodBookAPI.V1.Controllers
             return GerarToken(usuario);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult BuscarUsuarioId(string id)
+        {
+            var usuario = _userManager.FindByIdAsync(id).Result;
+            if(usuario != null)
+            {
+                return Ok(usuario);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
         private TokenDTO BuildToken(ApplicationUser usuario)
         {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
-                new Claim(JwtRegisteredClaimNames.Sub, usuario.Id)
+                new Claim(JwtRegisteredClaimNames.Sub, usuario.Id),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKeyAPI"]));
             var sign = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var exp = DateTime.UtcNow.AddDays(3);
+            var exp = DateTime.UtcNow.AddHours(7);
 
             JwtSecurityToken token = new JwtSecurityToken
                 (
@@ -138,7 +155,7 @@ namespace FoodBookAPI.V1.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
             var refreshToken = Guid.NewGuid().ToString();
-            var expRefreshToken = DateTime.UtcNow.AddDays(6);
+            var expRefreshToken = DateTime.UtcNow.AddDays(1);
 
             var tokenDTO = new TokenDTO { Token = tokenString, Expiration = exp, RefreshToken = refreshToken, ExpirationRefreshToken = expRefreshToken };
 

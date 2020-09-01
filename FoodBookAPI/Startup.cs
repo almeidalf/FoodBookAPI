@@ -66,17 +66,10 @@ namespace FoodBookAPI
                 cfg.AddDefaultPolicy(policy =>
                 {
                     policy
-                        .WithOrigins("https://localhost:44376", "http://localhost:44376")
+                        .WithOrigins()
                         .AllowAnyMethod()
                         .SetIsOriginAllowedToAllowWildcardSubdomains() //Habilitar CORS para todos os Subdomínios
                         .AllowAnyHeader();
-                });
-                //Habilitar todos os site, com restrição.
-                cfg.AddPolicy("AnyOrigin", policy =>
-                {
-                    policy.AllowAnyOrigin()
-                          .WithMethods("GET")
-                          .AllowAnyHeader();
                 });
             });
 
