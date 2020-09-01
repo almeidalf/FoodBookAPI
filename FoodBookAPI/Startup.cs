@@ -21,8 +21,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using FoodBookAPI.Helpers.Swagger;
+using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace FoodBookAPI
 {
@@ -73,16 +75,28 @@ namespace FoodBookAPI
                 });
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddSwaggerGen(options =>
             {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false; //(a-A-0-9)
-            })
-                    .AddEntityFrameworkStores<FoodBookContext>()
-                    .AddDefaultTokenProviders();
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Foodbook API V1",
+                    Version = "v1",
+                    Description = "Documentação da API do foodbook para facil implementação ",
+                });
+            });
+
+        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequiredLength = 5;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireNonAlphanumeric = false; //(a-A-0-9)
+        })
+                .AddEntityFrameworkStores<FoodBookContext>()
+                .AddDefaultTokenProviders();
 
 
             services.AddAuthentication(options =>
@@ -90,7 +104,8 @@ namespace FoodBookAPI
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = false,
@@ -101,7 +116,8 @@ namespace FoodBookAPI
                 };
             });
 
-            services.AddAuthorization(auth => {
+            services.AddAuthorization(auth =>
+            {
                 auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                                              .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                                              .RequireAuthenticatedUser()
@@ -139,6 +155,12 @@ namespace FoodBookAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSwagger(); // /swagger/v1/swagger.json
+            app.UseSwaggerUI(cfg =>
+            {
+                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "FoodBook - V1");
+                cfg.RoutePrefix = String.Empty;
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

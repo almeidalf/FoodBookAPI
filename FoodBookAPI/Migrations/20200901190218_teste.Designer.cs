@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodBookAPI.Migrations
 {
     [DbContext(typeof(FoodBookContext))]
-    [Migration("20200831170900_attbanco")]
-    partial class attbanco
+    [Migration("20200901190218_teste")]
+    partial class teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

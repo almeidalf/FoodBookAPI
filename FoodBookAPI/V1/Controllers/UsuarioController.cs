@@ -2,6 +2,7 @@
 using FoodBookAPI.V1.Models;
 using FoodBookAPI.V1.Models.DTO;
 using FoodBookAPI.V1.Repository.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace FoodBookAPI.V1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class UsuarioController : ControllerBase
     {
         private readonly IMapper _mapper;

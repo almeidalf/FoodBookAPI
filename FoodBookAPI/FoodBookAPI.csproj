@@ -5,18 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200831163917_BancoInicial.cs" />
-    <Compile Remove="Migrations\20200831163917_BancoInicial.Designer.cs" />
-    <Compile Remove="Migrations\20200831165208_attbanco.cs" />
-    <Compile Remove="Migrations\20200831165208_attbanco.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="DB\l5u51ttb.u0v~" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helpers\Swagger\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,11 +13,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.21" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.5.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
