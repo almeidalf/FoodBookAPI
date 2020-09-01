@@ -93,5 +93,14 @@ namespace FoodBookAPI.V1.Controllers
                return Ok();
             }
         }
+
+        [HttpDelete]
+        [Authorize]
+        public ActionResult Excluir(int id)
+        {
+            _receitaRepository.Excluir(id);
+            return Ok();
+        }
+
     }
 }
