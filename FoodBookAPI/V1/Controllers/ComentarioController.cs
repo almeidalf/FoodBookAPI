@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FoodBookAPI.V1.Models;
+using FoodBookAPI.V1.Models.DTO;
 using FoodBookAPI.V1.Repository.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -16,22 +18,26 @@ namespace FoodBookAPI.V1.Controllers
     [EnableCors]
     public class ComentarioController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IComentarios _comentarioRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         public ComentarioController(
+                                 IMapper mapper,
                                  IComentarios comentarioRepository,
                                  UserManager<ApplicationUser> userManager
                                 )
         {
+            _mapper = mapper;
             _comentarioRepository = comentarioRepository;
             _userManager = userManager;
         }
 
 
         [HttpPost]
-        public ActionResult Cadastrar([FromBody] Comentarios comentario)
+        public ActionResult Cadastrar([FromBody] ComentarioDTO comentarioDTO)
         {
-            if(comentario != null)
+            Comentarios comentario = _mapper.Map<ComentarioDTO, Comentarios>(comentarioDTO);
+            if (comentario != null)
             {
                 _comentarioRepository.Cadastrar(comentario);
                 return Ok();

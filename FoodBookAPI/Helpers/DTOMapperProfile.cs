@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using FoodBookAPI.V1.Models;
 using FoodBookAPI.V1.Models.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodBookAPI.Helpers
 {
@@ -12,8 +8,13 @@ namespace FoodBookAPI.Helpers
     {
         public DTOMapperProfile()
         {
-            CreateMap<ApplicationUser, UsuarioDTO>()
-                .ForMember(dest => dest.Nome, orig => orig.MapFrom(src => src.FullName));
+            CreateMap<UsuarioDTO, ApplicationUser>()
+                .ForMember(dest => dest.UserName, orig => orig.MapFrom(src => src.Email))
+                .ForMember(dest => dest.FullName, orig => orig.MapFrom(src => src.Nome));
+
+            CreateMap<LoginUsuarioDTO, ApplicationUser>();
+
+            CreateMap<ComentarioDTO, Comentarios>();
 
             //CreateMap<Mensagem, MensagemDTO>();
             //CreateMap<PaginationList<Palavra>, PaginationList<PalavraDTO>>();

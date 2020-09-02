@@ -46,10 +46,7 @@ namespace FoodBookAPI.V1.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser usuario = new ApplicationUser();
-                usuario.FullName = usuarioDTO.Nome;
-                usuario.UserName = usuarioDTO.Email;
-                usuario.Email = usuarioDTO.Email;
+                ApplicationUser usuario = _mapper.Map<UsuarioDTO, ApplicationUser>(usuarioDTO);
 
                 var resultado = _userManager.CreateAsync(usuario, usuarioDTO.Senha).Result;
 
@@ -66,7 +63,6 @@ namespace FoodBookAPI.V1.Controllers
                 {
                     return Ok(usuario);
                 }
-
             }
             else
             {
@@ -75,11 +71,8 @@ namespace FoodBookAPI.V1.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult Login([FromBody] UsuarioDTO usuarioDTO)
+        public ActionResult Login([FromBody] LoginUsuarioDTO usuarioDTO)
         {
-            ModelState.Remove("Nome");
-            ModelState.Remove("ConfirmacaoSenha");
-
             if (ModelState.IsValid)
             {
                 ApplicationUser usuario = _usuarioRepository.Obter(usuarioDTO.Email, usuarioDTO.Senha);
