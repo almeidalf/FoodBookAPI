@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace FoodBookAPI.Migrations
 {
-    public partial class teste : Migration
+    public partial class banco : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,9 +12,9 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 85, nullable: false),
+                    Id = table.Column<string>(maxLength: 75, nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 85, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 75, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,7 +26,7 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 85, nullable: false),
+                    Id = table.Column<string>(maxLength: 75, nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -52,11 +52,11 @@ namespace FoodBookAPI.Migrations
                 name: "IdentityUser",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 85, nullable: false),
+                    Id = table.Column<string>(maxLength: 75, nullable: false),
                     UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 85, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 75, nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 85, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 75, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
@@ -77,9 +77,9 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(maxLength: 85, nullable: false)
+                    Id = table.Column<int>(maxLength: 75, nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(maxLength: 85, nullable: false),
+                    RoleId = table.Column<string>(maxLength: 75, nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -98,9 +98,9 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(maxLength: 85, nullable: false)
+                    Id = table.Column<int>(maxLength: 75, nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(maxLength: 85, nullable: false),
+                    UserId = table.Column<string>(maxLength: 75, nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -119,10 +119,10 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 85, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 85, nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 75, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 75, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(maxLength: 85, nullable: false)
+                    UserId = table.Column<string>(maxLength: 75, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,8 +139,8 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(maxLength: 85, nullable: false),
-                    RoleId = table.Column<string>(maxLength: 85, nullable: false)
+                    UserId = table.Column<string>(maxLength: 75, nullable: false),
+                    RoleId = table.Column<string>(maxLength: 75, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -163,9 +163,9 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(maxLength: 85, nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 85, nullable: false),
-                    Name = table.Column<string>(maxLength: 85, nullable: false),
+                    UserId = table.Column<string>(maxLength: 75, nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 75, nullable: false),
+                    Name = table.Column<string>(maxLength: 75, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -209,7 +209,7 @@ namespace FoodBookAPI.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     RefreshToken = table.Column<string>(nullable: true),
-                    UsuarioId = table.Column<string>(maxLength: 256, nullable: true),
+                    UsuarioId = table.Column<string>(maxLength: 75, nullable: true),
                     ExpirationToken = table.Column<DateTime>(nullable: false),
                     Utilizado = table.Column<bool>(nullable: false),
                     ExpirationRefreshToken = table.Column<DateTime>(nullable: false),
@@ -221,6 +221,34 @@ namespace FoodBookAPI.Migrations
                     table.PrimaryKey("PK_Tokens", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Tokens_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comentarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Descricao = table.Column<string>(nullable: true),
+                    Estrelas = table.Column<string>(nullable: true),
+                    UsuarioId = table.Column<string>(nullable: true),
+                    ReceitaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comentarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comentarios_Receitas_ReceitaId",
+                        column: x => x.ReceitaId,
+                        principalTable: "Receitas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comentarios_AspNetUsers_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -265,6 +293,16 @@ namespace FoodBookAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comentarios_ReceitaId",
+                table: "Comentarios",
+                column: "ReceitaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentarios_UsuarioId",
+                table: "Comentarios",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Receitas_UsuarioId",
                 table: "Receitas",
                 column: "UsuarioId");
@@ -293,16 +331,19 @@ namespace FoodBookAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "IdentityUser");
+                name: "Comentarios");
 
             migrationBuilder.DropTable(
-                name: "Receitas");
+                name: "IdentityUser");
 
             migrationBuilder.DropTable(
                 name: "Tokens");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Receitas");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

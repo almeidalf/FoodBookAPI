@@ -18,7 +18,7 @@ namespace FoodBookAPI.V1.Models
         public string[] ModoPreparo { get; set; }
         public string UsuarioId { get; set; }
         [ForeignKey("UsuarioId")]
-        [MaxLength(256)]
+        [MaxLength(75)]
         public ApplicationUser Usuario { get; set; }
     }
 }

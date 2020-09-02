@@ -20,8 +20,8 @@ namespace FoodBookAPI.Migrations
             modelBuilder.Entity("FoodBookAPI.V1.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -85,6 +85,33 @@ namespace FoodBookAPI.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FoodBookAPI.V1.Models.Comentarios", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Estrelas")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ReceitaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("varchar(75)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceitaId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Comentarios");
+                });
+
             modelBuilder.Entity("FoodBookAPI.V1.Models.Receita", b =>
                 {
                     b.Property<int>("Id")
@@ -105,7 +132,7 @@ namespace FoodBookAPI.Migrations
                         .HasMaxLength(150);
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(85)");
+                        .HasColumnType("varchar(75)");
 
                     b.HasKey("Id");
 
@@ -136,8 +163,8 @@ namespace FoodBookAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<bool>("Utilizado")
                         .HasColumnType("bit");
@@ -152,8 +179,8 @@ namespace FoodBookAPI.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -164,8 +191,8 @@ namespace FoodBookAPI.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.HasKey("Id");
 
@@ -181,7 +208,7 @@ namespace FoodBookAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasMaxLength(85);
+                        .HasMaxLength(75);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -191,8 +218,8 @@ namespace FoodBookAPI.Migrations
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.HasKey("Id");
 
@@ -204,8 +231,8 @@ namespace FoodBookAPI.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -226,12 +253,12 @@ namespace FoodBookAPI.Migrations
                         .HasColumnType("timestamp");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
@@ -261,7 +288,7 @@ namespace FoodBookAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasMaxLength(85);
+                        .HasMaxLength(75);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -271,8 +298,8 @@ namespace FoodBookAPI.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.HasKey("Id");
 
@@ -284,20 +311,20 @@ namespace FoodBookAPI.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -309,12 +336,12 @@ namespace FoodBookAPI.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.HasKey("UserId", "RoleId");
 
@@ -326,16 +353,16 @@ namespace FoodBookAPI.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(85)")
-                        .HasMaxLength(85);
+                        .HasColumnType("varchar(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
@@ -343,6 +370,19 @@ namespace FoodBookAPI.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FoodBookAPI.V1.Models.Comentarios", b =>
+                {
+                    b.HasOne("FoodBookAPI.V1.Models.Receita", "Receita")
+                        .WithMany()
+                        .HasForeignKey("ReceitaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBookAPI.V1.Models.ApplicationUser", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("FoodBookAPI.V1.Models.Receita", b =>

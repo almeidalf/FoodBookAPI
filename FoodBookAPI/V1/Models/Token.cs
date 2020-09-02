@@ -13,7 +13,7 @@ namespace FoodBookAPI.V1.Models
         public int Id { get; set; }
         public string RefreshToken { get; set; }
         [ForeignKey("Usuario")]
-        [MaxLength(256)]
+        [MaxLength(75)]
         public string UsuarioId { get; set; }
         public ApplicationUser Usuario { get; set; }
         public DateTime ExpirationToken { get; set; }

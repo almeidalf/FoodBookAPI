@@ -15,8 +15,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +23,7 @@ using FoodBookAPI.Helpers.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FoodBookAPI
 {
@@ -62,6 +61,7 @@ namespace FoodBookAPI
             services.AddTransient<IUsuario, UsuarioRepository>();
             services.AddTransient<IToken, TokenRepository>();
             services.AddTransient<IReceita, ReceitaRepository>();
+            services.AddTransient<IComentarios, ComentarioRepository>();
 
             services.AddCors(cfg =>
             {
@@ -75,11 +75,9 @@ namespace FoodBookAPI
                 });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Foodbook API V1",
                     Version = "v1",
